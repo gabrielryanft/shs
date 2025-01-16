@@ -1,0 +1,59 @@
+#!/bin/bash
+
+if grep -q "$(ls)" <(echo "$@");
+then
+	calc="$(echo $@ | sed "s/$(ls | tr "\n" " ")/\*/g")"
+else 
+	calc=$@
+fi
+
+time_end="$(($calc))"
+
+toilet_font="pagga.tlf"
+
+printf "\r%02d:%02d:%02d\n" "$((time_end / 60 / 60))" "$((time_end / 60 % 60))" "$((time_end % 60))" | toilet -f $toilet_font
+
+height_of_toilet_font=3
+spacing(){
+	for ((i=0;i<$height_of_toilet_font;i++));
+	do
+		echo # new line
+	done
+}
+spacing
+
+key_press () {
+	while true; do
+		read -t 1 -N 1 -s -r && spacing && break
+	done
+}
+
+clean_term(){
+	i=0
+	for ((i=0;i<$height_of_toilet_font;i++)); 
+	do
+		printf "\r\033[A\r"
+	done
+}
+
+s=$time_end
+n_pauses=1
+while :
+do 
+	if (( s <= 0 ))
+	then 
+		break
+	fi
+
+	clean_term
+
+	printf "%02d:%02d:%02d" "$((s / 60 / 60))" "$((s / 60 % 60))" "$((s % 60))" | toilet -f $toilet_font
+	# If the hour gets bigger than 2 digits, it will grow to fit, it will not "cut" the last/first digit(s) off.
+
+	read -t 1 -N 1 -s -r key && clean_term && printf "\r%02d:%02d:%02d [ Paused %d - %s ]" "$((s / 60 / 60))" "$((s / 60 % 60))" "$((s % 60))" "$n_pauses" "$(date +'%H:%M:%S')" | toilet -w $COLUMNS -f $toilet_font && key_press && ((s++)) && ((n_pauses++))
+
+	((s--))
+done
+
+echo # New line
+mpv --loop=inf $HOME/settings/censor-beep-3.mp3

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Play a radio station
+
+Radio=$(ls --hide=*.sh $HOME/Music/radio/ | dmenu -f -i -p "listen to Radio ")
+
+if [ -n "$(echo $Radio | grep "\.txt")" ]; then 
+    mpv --no-video "$(cat $HOME/Music/radio/$Radio)"
+else
+    mpv --no-video "$Radio"
+fi

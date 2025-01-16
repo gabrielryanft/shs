@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Lingua Latina Per Se Ilustrata - on youtube - by channel ScorpioMartianus
+
+mpv --no-video "https://www.youtube.com/playlist?list=PLStTX8v9eaR4jANqRHvoKOK90-XaxZjWa"

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Play classic song from file in pc or from internet
+
+rand="$(ls -1 $HOME/Music/classic/ | shuf)"
+sng_ordr=""
+for i in $rand; do 
+    echo "$sng_ordr"
+    if [ -z "$(echo $i | grep ".txt")" ]; then
+        sng_ordr="$HOME/Music/classic/$i $sng_ordr"
+    else
+        sng_ordr="$(cat $HOME/Music/classic/$i) $sng_ordr"
+    fi
+done
+
+mpv --no-video $sng_ordr

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# YT playlist not in shuffle
+
+mpv --no-video "$(cat $HOME/settings/link_yt_playlist.info)"
