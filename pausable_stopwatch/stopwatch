@@ -13,7 +13,11 @@ toilet_font="pagga.tlf"
 
 printf "\r%02d:%02d:%02d\n" "$((time_end / 60 / 60))" "$((time_end / 60 % 60))" "$((time_end % 60))" | toilet -f $toilet_font
 
-height_of_toilet_font=3
+
+temp_file=$(mktemp)
+echo "string,ç[}jg´" | toilet -w 99999999 -f $toilet_font > $temp_file
+height_of_toilet_font="$(($(wc -l $temp_file | sed 's/\(^[0-9]*\) .*$/\1/')))"
+# height_of_toilet_font=3
 spacing(){
 	for ((i=0;i<$height_of_toilet_font;i++));
 	do
