@@ -3,6 +3,13 @@
 # I call this script with a keybind in i3 to show dmenu with the options of things to listen
 
 if tmux has-session -t 'Music MPV'; then 
+
+	if [ -n "$(ps ux | grep "xterm .* Music MPV" | grep -v "grep")" ]
+	then
+		kill "$(ps ux | grep "xterm .* Music MPV" | grep -v "grep" | grep "." | sed 's/[a-zA-Z0-9]* *\([0-9]*\) .*$/\1/')"
+		exit
+	fi
+
 	xterm -title "Music MPV" -e tmux a -t "Music MPV"
 	exit
 fi
