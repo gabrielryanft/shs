@@ -6,7 +6,7 @@ if tmux has-session -t 'Music MPV'; then
 
 	if [ -n "$(ps ux | grep "xterm .* Music MPV" | grep -v "grep")" ]
 	then
-		kill "$(ps ux | grep "xterm .* Music MPV" | grep -v "grep" | grep "." | sed 's/[a-zA-Z0-9]* *\([0-9]*\) .*$/\1/')"
+		kill "$(ps ux | grep "xterm .* Music MPV" | grep -v "grep" | grep "." | sed 's/^[a-zA-Z0-9]* *\([0-9]*\) .*$/\1/')"
 		exit
 	fi
 

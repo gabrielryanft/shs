@@ -8,7 +8,7 @@ else
 fi
 
 # Comverting XXmin XXh XXs to seconds
-# and XXp = XX periods ( 50 min )
+# and XXp = XX periods ( 1p = 50 min ) 
 if grep -q "[0-9]* *s" <(echo "$@")
 then 
 	calc="$(echo $@ | sed 's/\([0-9]*\) *s/ \1 /g')"
