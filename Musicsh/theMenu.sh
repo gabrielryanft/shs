@@ -1,6 +1,19 @@
 #!/bin/bash
 
-# I call this script with a keybind in i3 to show dmenu with the options of things to listen
+# remove the file with yt songs in it.
+rm /tmp/songs_data.csv.temp
+
+# load the file with yt songs in it. ( to choose from )
+load_vid_index () {
+	yt-dlp --flat-playlist --print "\"%(title)s\", %(uploader)s	,https://www.youtube.com/watch?v=%(id)s" "$(cat $HOME/settings/link_yt_playlist.info)" \
+		| nl -w2 -s',	' \
+		| tee $HOME/settings/songs_data.csv \
+		| sed 's/,	/>  /' \
+		| cut -f 1 \
+		> /tmp/songs_data.csv.temp
+	
+}
+load_vid_index &
 
 if tmux has-session -t 'Music MPV'; then 
 
@@ -20,4 +33,6 @@ echo "100%" > $HOME/settings/.MPV_Vol.info
 menu_items=$(ls --hide=*.sh $HOME/shs/Musicsh/ | dmenu -f -i -p "listen to ")
 menu_items="$HOME/shs/Musicsh/$(echo "$menu_items" | sed 's/ //g')"
 
-xterm -title "Music MPV" -e tmux new-session -s "Music MPV" $menu_items
+tmux new-session -d -s "Music MPV" $menu_items
+#                 |
+# ( man tmux: new session is attached to the current terminal unless -d is given.# the current term is tty. i dont want to go back to the tty and have to deal with mpv/tmux. )

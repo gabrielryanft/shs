@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mode="$(printf "Normal\nShuffle" | dmenu -f -i -p "Playing mode: ")"
+
+if [ "$mode" = "Shuffle" ] ; then
+	mpv --no-video --shuffle "$(xclip -selection clipboard -o)"
+else
+	mpv --no-video "$(xclip -selection clipboard -o)"
+fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Play a noise
+
+noise=$(ls --hide=*.sh $HOME/Music/noises/ | dmenu -f -i -p "Noise: ")
+
+mpv --no-video "$(cat $HOME/Music/noises/$noise)"

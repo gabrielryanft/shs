@@ -1,0 +1,46 @@
+#!/bin/bash
+
+menu () {
+	cat $1 \
+	| dmenu -l 35 -f -i -p "Song: " \
+	| cut -d">" -f 1 \
+	| grep -o "[0-9]*" \
+	| tr -d " "
+}
+
+wait_for_vid () {
+	while [ ! -n "$(cat /tmp/songs_data.csv.temp)" ]
+	do
+		[ -n "$(echo $1)" ] && break
+		sleep 0.1
+	done
+	[ -n "$(echo $1)" ] || sleep 0.5
+	# copy the main to the offline list.
+	[ -n "$(echo $1)" ] || cat /tmp/songs_data.csv.temp > $HOME/settings/songs_data_offline.lst
+}
+
+
+check_type () {
+
+	if [ "$1" = "Shuffle" ] ; then
+		wait_for_vid $3 && mpv --no-video --shuffle --playlist-start=$(($(menu $2) -1)) "$(cat $HOME/settings/link_yt_playlist.info)"
+	elif [ "$1" = "Normal" ] ; then
+		wait_for_vid $3 && mpv --no-video --playlist-start=$(($(menu $2) -1)) "$(cat $HOME/settings/link_yt_playlist.info)"
+	fi
+}
+
+mode="$(printf "Old list\nNormal\nShuffle\n" | dmenu -f -i -p "Playing mode: ")"
+
+if [ "$mode" = "Old list" ] ; then
+	mode="$(printf "Normal\nShuffle\n" | dmenu -f -i -p "Playing mode: ")"
+	check_type $mode "$HOME/settings/songs_data_offline.lst" "not_copy"
+else
+	check_type $mode "/tmp/songs_data.csv.temp"
+fi
+
+
+# link () {
+# 	sed -n $(index)p $HOME/settings/songs_data.csv | grep -o "https://www.youtube.com.*"
+# }
+#
+# mpv --no-video $(link)
