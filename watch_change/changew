@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+curl -o $HOME/settings/change/changew_inicio.info "$1"
+compare() {
+    if [ -n "$(diff $HOME/settings/change/changew_inicio.info $HOME/settings/change/changew_depois.info)" ];
+    then
+	notify-send "o site \"$1\" mudou"
+	exit
+    fi
+}
+while true;
+do
+    $(curl -o $HOME/settings/change/changew_depois.info "$1") && compare
+done

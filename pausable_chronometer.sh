@@ -80,4 +80,5 @@ do
 done
 
 echo # New line
-mpv --loop=inf $HOME/settings/censor-beep-3.mp3
+sound_alarm > /dev/null 2>&1
+notify-send "TIMER DONE!!" "${calc}s"

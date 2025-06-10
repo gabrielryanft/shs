@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+git clone "$1" $HOME/settings/change/changew_inicio_g.info
+git clone "$1" $HOME/settings/change/changew_depois_g.info
+compare() {
+    if [ -n "$(diff $HOME/settings/change/changew_inicio_g.info/* $HOME/settings/change/changew_depois_g.info/*)" ];
+    then
+	notify-send "o site \"$1\" mudou"
+	exit
+    fi
+}
+while true;
+do
+    rm -r $HOME/settings/change/changew_depois_g.info && $(git clone "$1" $HOME/settings/change/changew_depois_g.info) && compare
+done
