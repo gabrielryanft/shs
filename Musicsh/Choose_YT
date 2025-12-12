@@ -23,9 +23,9 @@ wait_for_vid () {
 check_type () {
 
 	if [ "$1" = "Shuffle" ] ; then
-		wait_for_vid $3 && mpv --no-video --shuffle --playlist-start=$(($(menu $2) -1)) "$(cat $HOME/settings/link_yt_playlist.info)"
+		wait_for_vid $3 && mpv --volume=60 --no-video --shuffle --playlist-start=$(($(menu $2) -1)) "$(cat $HOME/settings/link_yt_playlist.info)"
 	elif [ "$1" = "Normal" ] ; then
-		wait_for_vid $3 && mpv --no-video --playlist-start=$(($(menu $2) -1)) "$(cat $HOME/settings/link_yt_playlist.info)"
+		wait_for_vid $3 && mpv --volume=60 --no-video --playlist-start=$(($(menu $2) -1)) "$(cat $HOME/settings/link_yt_playlist.info)"
 	fi
 }
 

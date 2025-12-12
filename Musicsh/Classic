@@ -13,4 +13,4 @@ for i in $rand; do
     fi
 done
 
-mpv --no-video $sng_ordr
+mpv --no-video --volume=60 $sng_ordr

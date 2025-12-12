@@ -3,4 +3,4 @@
 # Lingua Latina Per Se Ilustrata - on youtube - by channel ScorpioMartianus
 
 # mpv --no-video "https://www.youtube.com/playlist?list=PLStTX8v9eaR4jANqRHvoKOK90-XaxZjWa"
-mpv --no-video --speed=1.25 "https://www.youtube.com/watch?v=YtPd2ALW5b4"
+mpv --volume=60 --save-position-on-quit --no-video --speed=1.25 "https://www.youtube.com/watch?v=YtPd2ALW5b4"

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if tmux has-session -t 'Recording'; then
+	echo "" > $HOME/settings/.recording.info
 	tmux send-keys -t 'Recording'.1 'q'
 	tmux send-keys -t 'Recording'.0 'q'
-	echo "" > $HOME/settings/.recording.info
 	exit
 fi
 
